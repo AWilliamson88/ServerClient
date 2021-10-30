@@ -1,0 +1,19 @@
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\bin\Debug\LoginServer.exe.config
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\bin\Debug\LoginServer.exe
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\bin\Debug\LoginServer.pdb
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\obj\Debug\LoginServer.LoginServerForm.resources
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\obj\Debug\LoginServer.Properties.Resources.resources
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\obj\Debug\LoginServer.csproj.GenerateResource.cache
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\obj\Debug\LoginServer.csproj.CoreCompileInputs.cache
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\obj\Debug\LoginServer.exe
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginServer\obj\Debug\LoginServer.pdb
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\bin\Debug\LoginServer.exe.config
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\bin\Debug\LoginServer.exe
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\bin\Debug\LoginServer.pdb
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.csproj.AssemblyReference.cache
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.LoginServerForm.resources
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.Properties.Resources.resources
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.csproj.GenerateResource.cache
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.csproj.CoreCompileInputs.cache
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.exe
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.pdb
