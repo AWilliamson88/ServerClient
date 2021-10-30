@@ -80,15 +80,44 @@ namespace LoginServer
 
         Thread listenThread;
         readonly List<Client> clients = new List<Client>();
+        readonly List<Client> DisconnectedClients = new List<Client>();
 
         public class Client
         {
+            public Thread ReadThread;
             public int id;
             public static int number = 1;
             public SafeFileHandle handle;
             public FileStream stream;
             public bool isLoggedIn;
+
         }
+
+        public PipeServer()
+        {
+            CloseClient += PipeServer_CloseClient;
+        }
+
+        public void PipeServer_CloseClient(Client client)
+        {
+            //Invoke(new PipeServer.CloseClientHandler(AllowMessaging));
+            Console.Out.WriteLine("Hello from the new method.");
+
+            // invoke the event, a client disconnected.
+            // This tells the form to check how many clients there are and update
+            if (ClientDisconnected != null)
+            {
+                ClientDisconnected();
+            }
+
+            client.ReadThread.Abort();
+
+
+            //Thread.CurrentThread.Abort();
+        }
+
+        public delegate void CloseClientHandler(Client client);
+        public event CloseClientHandler CloseClient;
 
         /// <summary>
         /// Variable for if the server is currently running.
@@ -211,6 +240,8 @@ namespace LoginServer
         /// </summary>
         public event AllowMessagingHandler AllowMessaging;
 
+        
+
         #endregion
 
         /// <summary>
@@ -315,6 +346,7 @@ namespace LoginServer
                 {
                     IsBackground = true
                 };
+                client.ReadThread = readThread;
                 readThread.Start(client);
 
                 client.id = Client.number;
@@ -373,30 +405,30 @@ namespace LoginServer
                     }
                     catch
                     {
-                        Console.Out.WriteLine("Server read break 2");
+                        //Console.Out.WriteLine("Server read break 2");
                         break;
                     }
-                    Console.Out.WriteLine();
-                    Console.Out.WriteLine("Bytes read before client disconnected." + bytesRead);
+                    //Console.Out.WriteLine();
+                    //Console.Out.WriteLine("Bytes read before client disconnected." + bytesRead);
                     // Client has disconnected.
                     if (bytesRead == 0)
                     {
-                        Console.Out.WriteLine("Server read break 3");
+                        //Console.Out.WriteLine("Server read break 3");
                         break;
                     }
-                    Console.Out.WriteLine("Bytes read after client disconnected." + bytesRead);
-                    Console.Out.WriteLine();
+                    //Console.Out.WriteLine("Bytes read after client disconnected." + bytesRead);
+                    //Console.Out.WriteLine();
 
                     if (MessageRecieved != null)
                     {
-                        Console.Out.WriteLine();
-                        string str = Utility.ConvertToString(ms.ToArray());
-                        Console.Out.WriteLine("Now printing the MessageRecieved.");
-                        Console.Out.WriteLine(str);
-                        Console.Out.WriteLine("After the MessageRecieved from the client: " + client.id);
-                        Console.Out.WriteLine("Total clients: " + clients.Count);
-                        Console.Out.WriteLine("Clients Handle: " + client.handle.ToString());
-                        Console.Out.WriteLine();
+                        //Console.Out.WriteLine();
+                        //string str = Utility.ConvertToString(ms.ToArray());
+                        //Console.Out.WriteLine("Now printing the MessageRecieved.");
+                        //Console.Out.WriteLine(str);
+                        //Console.Out.WriteLine("After the MessageRecieved from the client: " + client.id);
+                        //Console.Out.WriteLine("Total clients: " + clients.Count);
+                        //Console.Out.WriteLine("Clients Handle: " + client.handle.ToString());
+                        //Console.Out.WriteLine();
 
                         if (client.isLoggedIn)
                         {
@@ -404,7 +436,7 @@ namespace LoginServer
                         }
                         else
                         {
-                            Console.Out.WriteLine(Thread.CurrentThread.ManagedThreadId + " in Read");
+                            //Console.Out.WriteLine(Thread.CurrentThread.ManagedThreadId + " in Read");
                             ValidateClient(ms.ToArray(), client);
                         }
                     }
@@ -423,16 +455,37 @@ namespace LoginServer
 
                 // remove the client from the list of clients.
                 clients.Remove(client);
+                DisconnectedClients.Add(client);
             }
 
-            // invoke the event, a client disconnected.
-            if (ClientDisconnected != null)
+
+            //client event
+            CloseClient(client);
+
+        }
+
+        public void ClosClient(Client client)
+        {
+            if(client != null)
             {
-                ClientDisconnected();
+                if(client.stream != null)
+                {
+                    client.stream.Close();
+                    client.stream = null;
+                }
+
+                if (client.handle != null)
+                {
+                    client.handle.Close();
+                    client.handle = null;
+                }
+
+                //if (client != null)
+                //{
+                //    client.stream.Close();
+                //    client.stream = null;
+                //}
             }
-
-            Thread.CurrentThread.Abort();
-
         }
 
         #region ClientValidation

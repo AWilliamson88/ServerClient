@@ -76,6 +76,7 @@ namespace LoginClient
         FileStream stream;
         SafeFileHandle handle;
         Thread readThread;
+        bool shouldDisconnect;
 
         /// <summary>
         /// Is the client connected to a server pipe.
@@ -169,9 +170,6 @@ namespace LoginClient
             isConnected = false;
             pipeName = null;
             isLoggedIn = false;
-            UpdateTheForm();
-
-            readThread.Abort();
 
             // Clean up the resources
             if (stream != null)
@@ -182,6 +180,10 @@ namespace LoginClient
 
             stream = null;
             handle = null;
+
+            UpdateTheForm();
+
+            readThread.Abort();
         }
 
         /// <summary>
@@ -225,6 +227,7 @@ namespace LoginClient
             {
                 IsBackground = true
             };
+            shouldDisconnect = false;
             readThread.Start();
         }
 
@@ -252,7 +255,7 @@ namespace LoginClient
         {
             byte[] readBuffer = new byte[BUFFER_SIZE];
 
-            while (true)
+            while (!shouldDisconnect) //!should dissconnect
             {
                 int bytesRead = 0;
                 using (MemoryStream ms = new MemoryStream())
@@ -266,6 +269,7 @@ namespace LoginClient
                         if (totalSize == 0)
                         {
                             Console.Out.WriteLine("Client read break 1");
+                            shouldDisconnect = true;
                             break;
                         }
 
@@ -284,6 +288,7 @@ namespace LoginClient
                     catch
                     {
                         Console.Out.WriteLine("Client read break 2");
+                        shouldDisconnect = true;
                         break;
                     }
 
@@ -291,6 +296,7 @@ namespace LoginClient
                     if (bytesRead == 0)
                     {
                         Console.Out.WriteLine("Client read break 3");
+                        shouldDisconnect = true;
                         break;
                     }
 
@@ -298,43 +304,42 @@ namespace LoginClient
                     if(MessageRecieved != null)
                     {
                         MessageRecieved(ms.ToArray());
-                        Console.Out.WriteLine(ms.ToArray());
-                        Console.Out.WriteLine(Thread.CurrentThread.ManagedThreadId + " in read()");
+                        //Console.Out.WriteLine(ms.ToArray());
+                        //Console.Out.WriteLine(Thread.CurrentThread.ManagedThreadId + " in read()");
 
                         if (!isLoggedIn)
                         {
-                            Console.Out.WriteLine();
-                            Console.Out.WriteLine("Begin validation.");
+                            //Console.Out.WriteLine();
+                            //Console.Out.WriteLine("Begin validation.");
                             ValidationResult(ms.ToArray());
-                            Console.Out.WriteLine("Validation has ended");
-                            Console.Out.WriteLine();
+                            //Console.Out.WriteLine("Validation has ended");
+                            //Console.Out.WriteLine();
                         }
                     }
                 }
             }
 
+
+            Console.Out.WriteLine("outside the while");
+
             // If disconnected then the disconnection was caused by the server
             // being terminated.
-            if (isConnected)
-            {
-                // Clean up the resources.
-                stream.Close();
-                handle.Close();
+            //if (isConnected)
+            //{
+            //    // Clean up the resources.
+            //    UpdateTheForm();
 
-                stream = null;
-                handle = null;
+            //    //if (ServerDisconnected != null)
+            //    //{
+            //    //    ServerDisconnected();
+            //    //}
+            //}
+            Disconnect();
+            Console.Out.WriteLine("At the very end.");
 
-                // Client no longer conected to the server.
-                isLoggedIn = false;
-                isConnected = false;
-                pipeName = null;
-                UpdateTheForm();
-
-                if (ServerDisconnected != null)
-                {
-                    ServerDisconnected();
-                }
-            }
+            // 
+            // Abort
+            
 
         }
 
