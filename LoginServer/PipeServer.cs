@@ -229,9 +229,16 @@ namespace LoginServer
             listenThread.Start();
 
             IsRunning(true);
-
-
         }
+
+        public void Stop()
+        {
+            if (getListenThread() != null)
+            {
+                getListenThread().Abort();
+            }
+        }
+
 
         /// <summary>
         /// When a new client connects, sets the stream and creates a new thread to listen to them.
@@ -347,6 +354,7 @@ namespace LoginServer
                         // Client has disconnected.
                         if (totalSize == 0)
                         {
+                            Console.Out.WriteLine("Server read break 1");
                             break;
                         }
 
@@ -365,6 +373,7 @@ namespace LoginServer
                     }
                     catch
                     {
+                        Console.Out.WriteLine("Server read break 2");
                         break;
                     }
                     Console.Out.WriteLine();
@@ -372,6 +381,7 @@ namespace LoginServer
                     // Client has disconnected.
                     if (bytesRead == 0)
                     {
+                        Console.Out.WriteLine("Server read break 3");
                         break;
                     }
                     Console.Out.WriteLine("Bytes read after client disconnected." + bytesRead);

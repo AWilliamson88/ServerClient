@@ -17,3 +17,6 @@ F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer
 F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.csproj.CoreCompileInputs.cache
 F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.exe
 F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.pdb
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\bin\Debug\ServerClientShared.dll
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\bin\Debug\ServerClientShared.pdb
+F:\1. My Programming\ServerClient\ServerClient\LoginServer\obj\Debug\LoginServer.csproj.CopyComplete

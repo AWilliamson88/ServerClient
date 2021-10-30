@@ -64,12 +64,12 @@ namespace LoginClient
         /// <summary>
         /// Handles the client connected to the server message.
         /// </summary>
-        public delegate void ConnectedToServerHandler();
+        public delegate void UpdateTheFormHandler();
 
         /// <summary>
         /// The event that is called when the client connects to the server.
         /// </summary>
-        public event ConnectedToServerHandler ConnectedToServer;
+        public event UpdateTheFormHandler UpdateTheForm;
 
         const int BUFFER_SIZE = 4096;
 
@@ -80,17 +80,17 @@ namespace LoginClient
         /// <summary>
         /// Is the client connected to a server pipe.
         /// </summary>
-        private bool connected;
+        public bool isConnected { get; private set; }
 
         /// <summary>
         /// The name of the pipe connected to the server.
         /// </summary>
-        private string pipeName;
+        public string pipeName { get; private set; }
 
         /// <summary>
         /// Is the client logged in as the admin.
         /// </summary>
-        private bool isLoggedIn;
+        public bool isLoggedIn { get; private set; }
 
         /// <summary>
         /// The methods for accessing the 
@@ -99,56 +99,56 @@ namespace LoginClient
         /// <returns></returns>
         #region Accessors
 
-        public bool IsLoggedIn()
-        {
-            return isLoggedIn;
-        }
+        //public bool isLoggedIn()
+        //{
+        //    return isLoggedIn;
+        //}
 
-        private void IsLoggedIn(bool isLoggedInOrNot)
-        {
-            isLoggedIn = isLoggedInOrNot;
+        //private void isLoggedIn(bool isLoggedInOrNot)
+        //{
+        //    isLoggedIn = isLoggedInOrNot;
 
-            if (isLoggedIn)
-            {
-                ConnectedToServer();
-            }
-        }
+        //    if (isLoggedIn)
+        //    {
+        //        UpdateTheForm();
+        //    }
+        //}
 
         /// <summary>
         /// Returns true if client is connected to a server.
         /// </summary>
         /// <returns>Boolean</returns>
-        public bool IsConnected()
-        {
-            return connected;
-        }
+        //public bool isConnected()
+        //{
+        //    return isConnected;
+        //}
 
         /// <summary>
         /// Set the value of the connected boolean.
         /// </summary>
         /// <param name="b">The new value of connected.</param>
-        private void IsConnected(bool b)
-        {
-            connected = b;
-        }
+        //private void isConnected(bool b)
+        //{
+        //    isConnected = b;
+        //}
 
         /// <summary>
         /// Return the name of the pipe used to connect to the server.
         /// </summary>
         /// <returns>string</returns>
-        public string GetPipeName()
-        {
-            return pipeName;
-        }
+        //public string pipeName()
+        //{
+        //    return pipeName;
+        //}
 
         /// <summary>
         /// Set the name of the pipe that connects to the server.
         /// </summary>
         /// <param name="newPipeName">The new pipe name.</param>
-        private void SetPipeName(string newPipeName)
-        {
-            pipeName = newPipeName;
-        }
+        //private void pipeName(string newPipeName)
+        //{
+        //    pipeName = newPipeName;
+        //}
 
         #endregion
 
@@ -160,15 +160,16 @@ namespace LoginClient
         /// </summary>
         public void Disconnect()
         {
-            if(!IsConnected())
+            if(!isConnected)
             {
                 return;
             }
 
             // We're no longer connected to the server.
-            IsConnected(false);
-            SetPipeName(null);
-            IsLoggedIn(false);
+            isConnected = false;
+            pipeName = null;
+            isLoggedIn = false;
+            UpdateTheForm();
 
             readThread.Abort();
 
@@ -189,15 +190,15 @@ namespace LoginClient
         /// <param name="pipename">The name of the pipe to connect to.</param>
         public void Connect(string pipename)
         {
-            if (IsConnected())
+            if (isConnected)
             {
                 throw new Exception("Already connected to server.");
             }
 
-            SetPipeName(pipename);
+            pipeName = pipename;
 
             handle = CreateFile(
-                GetPipeName(),
+                pipeName,
                 0xC0000000, // GENERIC_READ | GENERIC_WRITE = 0x80000000 | 0x40000000
                 0,
                 IntPtr.Zero,
@@ -217,7 +218,7 @@ namespace LoginClient
 
             stream = new FileStream(handle, FileAccess.ReadWrite, BUFFER_SIZE, true);
 
-            IsConnected(true);
+            isConnected = true;
 
             // Start listening for messages.
             readThread = new Thread(Read)
@@ -239,7 +240,8 @@ namespace LoginClient
 
             if (str.Equals("You are now logged in."))
             {
-                IsLoggedIn(true);
+                isLoggedIn = true;
+                UpdateTheForm();
             }
         }
 
@@ -263,6 +265,7 @@ namespace LoginClient
                         // client had disconnected.
                         if (totalSize == 0)
                         {
+                            Console.Out.WriteLine("Client read break 1");
                             break;
                         }
 
@@ -280,12 +283,14 @@ namespace LoginClient
                     }
                     catch
                     {
+                        Console.Out.WriteLine("Client read break 2");
                         break;
                     }
 
                     // Client has disconnected.
                     if (bytesRead == 0)
                     {
+                        Console.Out.WriteLine("Client read break 3");
                         break;
                     }
 
@@ -296,7 +301,7 @@ namespace LoginClient
                         Console.Out.WriteLine(ms.ToArray());
                         Console.Out.WriteLine(Thread.CurrentThread.ManagedThreadId + " in read()");
 
-                        if (!IsLoggedIn())
+                        if (!isLoggedIn)
                         {
                             Console.Out.WriteLine();
                             Console.Out.WriteLine("Begin validation.");
@@ -310,7 +315,7 @@ namespace LoginClient
 
             // If disconnected then the disconnection was caused by the server
             // being terminated.
-            if (IsConnected())
+            if (isConnected)
             {
                 // Clean up the resources.
                 stream.Close();
@@ -320,9 +325,10 @@ namespace LoginClient
                 handle = null;
 
                 // Client no longer conected to the server.
-                IsLoggedIn(false);
-                IsConnected(false);
-                SetPipeName(null);
+                isLoggedIn = false;
+                isConnected = false;
+                pipeName = null;
+                UpdateTheForm();
 
                 if (ServerDisconnected != null)
                 {

@@ -190,10 +190,7 @@ namespace LoginServer
         {
             if (pipeServer != null)
             {
-                if (pipeServer.getListenThread() != null)
-                {
-                    pipeServer.getListenThread().Abort();
-                }
+                pipeServer.Stop();
             }
         }
     }

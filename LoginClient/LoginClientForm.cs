@@ -51,15 +51,17 @@ namespace LoginClient
         {
             if (pipeClient != null)
             {
+                pipeClient.Disconnect();
                 pipeClient.MessageRecieved -= pipeClient_MessageRecieved;
                 pipeClient.ServerDisconnected -= pipeClient_ServerDisconnected;
-                pipeClient.ConnectedToServer -= pipeClient_ConnectedToServer;
+                pipeClient.UpdateTheForm -= pipeClient_UpdateTheForm;
+                pipeClient = null;
             }
 
             pipeClient = new PipeClient();
             pipeClient.MessageRecieved += pipeClient_MessageRecieved;
             pipeClient.ServerDisconnected += pipeClient_ServerDisconnected;
-            pipeClient.ConnectedToServer += pipeClient_ConnectedToServer;
+            pipeClient.UpdateTheForm += pipeClient_UpdateTheForm;
 
             UpdateForm();
         }
@@ -69,9 +71,9 @@ namespace LoginClient
         /// </summary>
         #region HandlerMethods
 
-        private void pipeClient_ConnectedToServer()
+        private void pipeClient_UpdateTheForm()
         {
-            Invoke(new PipeClient.ConnectedToServerHandler(UpdateForm));
+            Invoke(new PipeClient.UpdateTheFormHandler(UpdateForm));
         }
 
         private void pipeClient_MessageRecieved(byte[] message)
@@ -111,8 +113,8 @@ namespace LoginClient
         /// </summary>
         private void UpdateForm()
         {
-            bool connected = pipeClient.IsConnected();
-            bool loggedIn = pipeClient.IsLoggedIn();
+            bool connected = pipeClient.isConnected;
+            bool loggedIn = pipeClient.isLoggedIn;
 
             ConnectBtn.Enabled = !connected;
             DisconnectBtn.Enabled = connected;
@@ -179,7 +181,7 @@ namespace LoginClient
         /// <param name="e"></param>
         private void DisconnectBtn_Click(object sender, EventArgs e)
         {
-            pipeClient.Disconnect();
+            
             CreateNewPipeClient();
             MessageLogTB.Text += "Disconnected from the server." + "\r\n";
             UpdateForm();
