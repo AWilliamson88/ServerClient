@@ -73,6 +73,7 @@ namespace LoginClient
 
         const int BUFFER_SIZE = 4096;
 
+        static LinkedList<Thread> threads = new LinkedList<Thread>();
         FileStream stream;
         SafeFileHandle handle;
         Thread readThread;
@@ -161,10 +162,11 @@ namespace LoginClient
         /// </summary>
         public void Disconnect()
         {
-            if(!isConnected)
-            {
-                return;
-            }
+            Console.Out.WriteLine("Connected: " + isConnected);
+            //if(!isConnected)
+            //{
+            //    return;
+            //}
 
             // We're no longer connected to the server.
             isConnected = false;
@@ -176,14 +178,19 @@ namespace LoginClient
             {
                 stream.Close();
             }
-            handle.Close();
+
+            if (handle != null)
+            {
+                handle.Close();
+            }
 
             stream = null;
             handle = null;
 
             UpdateTheForm();
 
-            readThread.Abort();
+            if (readThread != null)
+                    readThread.Abort();
         }
 
         /// <summary>
@@ -228,6 +235,8 @@ namespace LoginClient
                 IsBackground = true
             };
             shouldDisconnect = false;
+            threads.AddLast(readThread);
+            Console.Out.WriteLine("The number of read threads at connect: " + threads.Count);
             readThread.Start();
         }
 
@@ -235,11 +244,11 @@ namespace LoginClient
         /// <summary>
         /// Takes the byte[] from the server and checks the login attempt was successful.
         /// </summary>
-        /// <param name="result">Byte[] </param>
-        private void ValidationResult(byte[] result)
+        /// <param name="message">Byte[] </param>
+        private void ValidationResult(byte[] message)
         {
             ASCIIEncoding encoder = new ASCIIEncoding();
-            string str = encoder.GetString(result, 0, result.Length);
+            string str = encoder.GetString(message, 0, message.Length);
 
             if (str.Equals("You are now logged in."))
             {
@@ -253,10 +262,15 @@ namespace LoginClient
         /// </summary>
         public void Read()
         {
+            Console.Out.WriteLine();
+            Console.Out.WriteLine("Client Read Method thread: " + Thread.CurrentThread.ManagedThreadId);
             byte[] readBuffer = new byte[BUFFER_SIZE];
 
-            while (!shouldDisconnect) //!should dissconnect
+            while (!shouldDisconnect)
             {
+                Console.Out.WriteLine("Client Read while");
+                Console.Out.WriteLine();
+                Thread.Sleep(100);
                 int bytesRead = 0;
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -284,6 +298,8 @@ namespace LoginClient
                             bytesRead += numBytes;
 
                         } while (bytesRead < totalSize);
+                        Console.Out.WriteLine("Client finished reading from server");
+                        Console.Out.WriteLine();
                     }
                     catch
                     {
@@ -303,24 +319,26 @@ namespace LoginClient
                     // Call message recieved event.
                     if(MessageRecieved != null)
                     {
+                        Console.Out.WriteLine();
+                        Console.Out.WriteLine("Client: 1 " + Thread.CurrentThread.ManagedThreadId);
                         MessageRecieved(ms.ToArray());
                         //Console.Out.WriteLine(ms.ToArray());
                         //Console.Out.WriteLine(Thread.CurrentThread.ManagedThreadId + " in read()");
-
+                        Console.Out.WriteLine("Client: 1.5, Logged in: " + isLoggedIn + " Thread: " + Thread.CurrentThread.ManagedThreadId);
                         if (!isLoggedIn)
                         {
+                            Console.Out.WriteLine("Client: 2 " + Thread.CurrentThread.ManagedThreadId);
                             //Console.Out.WriteLine();
                             //Console.Out.WriteLine("Begin validation.");
                             ValidationResult(ms.ToArray());
-                            //Console.Out.WriteLine("Validation has ended");
-                            //Console.Out.WriteLine();
+                            Console.Out.WriteLine("Client: 3 " + Thread.CurrentThread.ManagedThreadId);
+                            Console.Out.WriteLine();
                         }
                     }
                 }
             }
 
 
-            Console.Out.WriteLine("outside the while");
 
             // If disconnected then the disconnection was caused by the server
             // being terminated.
@@ -334,12 +352,12 @@ namespace LoginClient
             //    //    ServerDisconnected();
             //    //}
             //}
+            Console.Out.WriteLine();
+            Console.Out.WriteLine("Calling the disconnect method");
             Disconnect();
-            Console.Out.WriteLine("At the very end.");
-
             // 
             // Abort
-            
+
 
         }
 
@@ -354,19 +372,14 @@ namespace LoginClient
             // Check what the two stream.write lines do.
             ASCIIEncoding encoder = new ASCIIEncoding();
             string str = encoder.GetString(message, 0, message.Length);
-            Console.Out.WriteLine();
+            
             Console.Out.WriteLine("The thread Sending the message is thread: " + Thread.CurrentThread.ManagedThreadId);
-            Console.Out.WriteLine("The message sent to the Send Message method is: \n" + str);
-            Console.Out.WriteLine();
-            Console.Out.WriteLine(BitConverter.GetBytes(message.Length));
-            Console.Out.WriteLine();
+            Console.Out.WriteLine("The message sent to the Server is: " + str);
 
             try
             {
                 // Write the entire stream length.
                 stream.Write(BitConverter.GetBytes(message.Length), 0, 4);
-
-
                 stream.Write(message, 0, message.Length);
                 stream.Flush();
             }

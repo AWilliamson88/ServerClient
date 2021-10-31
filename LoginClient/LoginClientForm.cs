@@ -94,7 +94,6 @@ namespace LoginClient
         /// <param name="message"></param>
         private void DisplayRecievedMessage(byte[] message)
         {
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId + "in DisplayRecievedMessage");
             ASCIIEncoding encoder = new ASCIIEncoding();
             string str = encoder.GetString(message, 0, message.Length);
 
@@ -226,7 +225,14 @@ namespace LoginClient
 
         private void LoginClientForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            pipeClient.Disconnect();
+            if (pipeClient != null)
+            {
+                pipeClient.Disconnect();
+                pipeClient.MessageRecieved -= pipeClient_MessageRecieved;
+                pipeClient.ServerDisconnected -= pipeClient_ServerDisconnected;
+                pipeClient.UpdateTheForm -= pipeClient_UpdateTheForm;
+                pipeClient = null;
+            }
         }
     }
 }

@@ -123,11 +123,10 @@ namespace LoginServer
         /// </summary>
         private void ClientDisconnected()
         {
-            string str = "Total Clients: " + pipeServer.TotalConnectedClients;
-            MessageLogTB.Text += str + "\r\n";
-
             if (pipeServer.TotalConnectedClients == 0)
             {
+                string str = "Total Clients: " + pipeServer.TotalConnectedClients;
+                MessageLogTB.Text += str + "\r\n";
                 NoClients();
             }
         }

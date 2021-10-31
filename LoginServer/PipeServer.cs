@@ -76,8 +76,6 @@ namespace LoginServer
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool DisconnectNamedPipe(SafeFileHandle hHandle);
 
-
-
         Thread listenThread;
         readonly List<Client> clients = new List<Client>();
         readonly List<Client> DisconnectedClients = new List<Client>();
@@ -90,7 +88,6 @@ namespace LoginServer
             public SafeFileHandle handle;
             public FileStream stream;
             public bool isLoggedIn;
-
         }
 
         public PipeServer()
@@ -101,7 +98,7 @@ namespace LoginServer
         public void PipeServer_CloseClient(Client client)
         {
             //Invoke(new PipeServer.CloseClientHandler(AllowMessaging));
-            Console.Out.WriteLine("Hello from the new method.");
+            //Console.Out.WriteLine("Hello from the new method.");
 
             // invoke the event, a client disconnected.
             // This tells the form to check how many clients there are and update
@@ -109,10 +106,13 @@ namespace LoginServer
             {
                 ClientDisconnected();
             }
+            if (client.stream != null)
+                    client.stream = null;
+
+            if (client.handle != null)
+                    client.handle = null;
 
             client.ReadThread.Abort();
-
-
             //Thread.CurrentThread.Abort();
         }
 
@@ -266,6 +266,7 @@ namespace LoginServer
         {
             if (getListenThread() != null)
             {
+                Console.Out.WriteLine("The listen thread is thread: " + getListenThread().ManagedThreadId);
                 getListenThread().Abort();
             }
         }
@@ -278,7 +279,7 @@ namespace LoginServer
         {
             SECURITY_DESCRIPTOR sd = new SECURITY_DESCRIPTOR();
 
-            // Set the Security Descriptor to be completely permissive. ////////////////////////////////////////////////
+            // Set the Security Descriptor to be completely permissive. 
             InitializeSecurityDescriptor(ref sd, SECURITY_DESCRIPTOR_REVISION);
             SetSecurityDescriptorDacl(ref sd, true, IntPtr.Zero, false);
 
@@ -367,19 +368,23 @@ namespace LoginServer
         /// <param name="clientObj"></param>
         private void Read(Object clientObj)
         {
+            Console.Out.WriteLine();
+
+            Console.Out.WriteLine("Server read");
             Client client = (Client)clientObj;
 
             byte[] buffer = new byte[BUFFER_SIZE];
 
             while (true)
             {
+                Console.Out.WriteLine("Server read while");
+                Console.Out.WriteLine();
                 int bytesRead = 0;
 
                 using (MemoryStream ms = new MemoryStream())
                 {
                     try
                     {
-
                         // Read the stream length.
                         int totalSize = client.stream.Read(buffer, 0, 4);
 
@@ -401,11 +406,12 @@ namespace LoginServer
                             bytesRead += numBytes;
 
                         } while (bytesRead < totalSize);
-
+                        Console.Out.WriteLine("Server finished reading from client");
+                        Console.Out.WriteLine();
                     }
                     catch
                     {
-                        //Console.Out.WriteLine("Server read break 2");
+                        Console.Out.WriteLine("Server read break 2");
                         break;
                     }
                     //Console.Out.WriteLine();
@@ -413,7 +419,7 @@ namespace LoginServer
                     // Client has disconnected.
                     if (bytesRead == 0)
                     {
-                        //Console.Out.WriteLine("Server read break 3");
+                        Console.Out.WriteLine("Server read break 3");
                         break;
                     }
                     //Console.Out.WriteLine("Bytes read after client disconnected." + bytesRead);
@@ -421,23 +427,21 @@ namespace LoginServer
 
                     if (MessageRecieved != null)
                     {
-                        //Console.Out.WriteLine();
-                        //string str = Utility.ConvertToString(ms.ToArray());
-                        //Console.Out.WriteLine("Now printing the MessageRecieved.");
-                        //Console.Out.WriteLine(str);
-                        //Console.Out.WriteLine("After the MessageRecieved from the client: " + client.id);
-                        //Console.Out.WriteLine("Total clients: " + clients.Count);
-                        //Console.Out.WriteLine("Clients Handle: " + client.handle.ToString());
-                        //Console.Out.WriteLine();
-
+                        Console.Out.WriteLine();
+                        Console.Out.WriteLine("Server: 1 " + Thread.CurrentThread.ManagedThreadId);
+                        string str = Utility.ConvertToString(ms.ToArray());
+                        Console.Out.WriteLine("Server received " + str);
                         if (client.isLoggedIn)
                         {
                             MessageRecieved(ms.ToArray());
+                        Console.Out.WriteLine("Server: 1.5, Logged in: " + client.isLoggedIn + " Thread: " + Thread.CurrentThread.ManagedThreadId);
                         }
                         else
                         {
-                            //Console.Out.WriteLine(Thread.CurrentThread.ManagedThreadId + " in Read");
+                            Console.Out.WriteLine("Server: 2 " + Thread.CurrentThread.ManagedThreadId);
                             ValidateClient(ms.ToArray(), client);
+                            Console.Out.WriteLine("Server: 3 " + Thread.CurrentThread.ManagedThreadId);
+                            Console.Out.WriteLine();
                         }
                     }
                 }
@@ -455,37 +459,13 @@ namespace LoginServer
 
                 // remove the client from the list of clients.
                 clients.Remove(client);
-                DisconnectedClients.Add(client);
             }
-
+            client.isLoggedIn = false;
+            DisconnectedClients.Add(client);
 
             //client event
             CloseClient(client);
 
-        }
-
-        public void ClosClient(Client client)
-        {
-            if(client != null)
-            {
-                if(client.stream != null)
-                {
-                    client.stream.Close();
-                    client.stream = null;
-                }
-
-                if (client.handle != null)
-                {
-                    client.handle.Close();
-                    client.handle = null;
-                }
-
-                //if (client != null)
-                //{
-                //    client.stream.Close();
-                //    client.stream = null;
-                //}
-            }
         }
 
         #region ClientValidation
@@ -499,9 +479,6 @@ namespace LoginServer
         private void ValidateClient(byte[] adminDetailsFromClient, Client client)
         {
             string str = Utility.ConvertToString(adminDetailsFromClient);
-            Console.Out.WriteLine("Now printing the message from the client.");
-            Console.Out.WriteLine(str);
-            Console.Out.WriteLine("After the message from the client.");
 
             string[] clientAdminDetails = str.Split(',');
             string[] adminDetails = GetAdminDetails().Split(',');
@@ -520,9 +497,6 @@ namespace LoginServer
                     client.isLoggedIn = true;
                     AllowMessaging();
                 }
-
-                //Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
-                Console.Out.WriteLine(Thread.CurrentThread.ManagedThreadId + " in ValidateClient");
                 SendClientValidationMessage(client);
             }
         }
