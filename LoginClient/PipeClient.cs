@@ -170,27 +170,32 @@ namespace LoginClient
 
             // We're no longer connected to the server.
             isConnected = false;
-            pipeName = null;
+            //pipeName = null;
             isLoggedIn = false;
 
             // Clean up the resources
             if (stream != null)
             {
                 stream.Close();
+                stream = null;  
             }
 
             if (handle != null)
             {
                 handle.Close();
+                handle = null;
             }
 
-            stream = null;
-            handle = null;
+            //UpdateTheForm();
 
-            UpdateTheForm();
+            shouldDisconnect = true;
 
-            if (readThread != null)
-                    readThread.Abort();
+            //if (readThread != null)
+            //{
+            //    var temp = readThread;
+            //    readThread = null;
+            //    temp.Abort();
+            //}
         }
 
         /// <summary>
@@ -270,7 +275,7 @@ namespace LoginClient
             {
                 Console.Out.WriteLine("Client Read while");
                 Console.Out.WriteLine();
-                Thread.Sleep(100);
+                //Thread.Sleep(100);
                 int bytesRead = 0;
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -347,16 +352,17 @@ namespace LoginClient
             //    // Clean up the resources.
             //    UpdateTheForm();
 
-            //    //if (ServerDisconnected != null)
-            //    //{
-            //    //    ServerDisconnected();
-            //    //}
-            //}
+            if (ServerDisconnected != null)
+            {
+                Disconnect();
+            }
+
             Console.Out.WriteLine();
             Console.Out.WriteLine("Calling the disconnect method");
-            Disconnect();
-            // 
-            // Abort
+             
+            var temp = readThread;
+            readThread = null;
+            temp.Abort();
 
 
         }

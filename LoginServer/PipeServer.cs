@@ -442,6 +442,7 @@ namespace LoginServer
                             ValidateClient(ms.ToArray(), client);
                             Console.Out.WriteLine("Server: 3 " + Thread.CurrentThread.ManagedThreadId);
                             Console.Out.WriteLine();
+                            //ms.Close();
                         }
                     }
                 }
@@ -566,6 +567,7 @@ namespace LoginServer
         /// <param name="message">The message to send.</param>
         public void SendMessageToAll(byte[] message)
         {
+            Console.Out.WriteLine("Send message to all.");
             lock (clients)
             {
                 byte[] messageLength = BitConverter.GetBytes(message.Length);

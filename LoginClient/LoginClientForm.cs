@@ -227,11 +227,11 @@ namespace LoginClient
         {
             if (pipeClient != null)
             {
-                pipeClient.Disconnect();
                 pipeClient.MessageRecieved -= pipeClient_MessageRecieved;
                 pipeClient.ServerDisconnected -= pipeClient_ServerDisconnected;
                 pipeClient.UpdateTheForm -= pipeClient_UpdateTheForm;
-                pipeClient = null;
+                pipeClient.Disconnect();
+                //pipeClient = null;
             }
         }
     }
