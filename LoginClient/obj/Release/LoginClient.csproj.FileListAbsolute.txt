@@ -1,0 +1,28 @@
+D:\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.exe.config
+D:\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.exe
+D:\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.pdb
+D:\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.LoginClientForm.resources
+D:\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.Properties.Resources.resources
+D:\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.csproj.GenerateResource.cache
+D:\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.csproj.CoreCompileInputs.cache
+D:\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.exe
+D:\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.pdb
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.exe.config
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.exe
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.pdb
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.LoginClientForm.resources
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.Properties.Resources.resources
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.csproj.GenerateResource.cache
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.csproj.CoreCompileInputs.cache
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.exe
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.pdb
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.exe.config
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.exe
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Release\LoginClient.pdb
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.csproj.AssemblyReference.cache
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.LoginClientForm.resources
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.Properties.Resources.resources
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.csproj.GenerateResource.cache
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.csproj.CoreCompileInputs.cache
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.exe
+F:\Documents\Tafe\Dip_Of_Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Release\LoginClient.pdb

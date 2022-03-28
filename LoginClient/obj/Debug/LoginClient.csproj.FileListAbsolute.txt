@@ -1,0 +1,22 @@
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Debug\LoginClient.exe.config
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Debug\LoginClient.exe
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\bin\Debug\LoginClient.pdb
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Debug\LoginClient.LoginClientForm.resources
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Debug\LoginClient.Properties.Resources.resources
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Debug\LoginClient.csproj.GenerateResource.cache
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Debug\LoginClient.csproj.CoreCompileInputs.cache
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Debug\LoginClient.exe
+E:\Documents\Tafe\Dip of Programming\Programming 3\Portfolio\Q4\LoginClient\obj\Debug\LoginClient.pdb
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\bin\Debug\LoginClient.exe.config
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\bin\Debug\LoginClient.exe
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\bin\Debug\LoginClient.pdb
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\obj\Debug\LoginClient.csproj.AssemblyReference.cache
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\obj\Debug\LoginClient.LoginClientForm.resources
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\obj\Debug\LoginClient.Properties.Resources.resources
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\obj\Debug\LoginClient.csproj.GenerateResource.cache
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\obj\Debug\LoginClient.csproj.CoreCompileInputs.cache
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\obj\Debug\LoginClient.exe
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\obj\Debug\LoginClient.pdb
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\bin\Debug\ServerClientShared.dll
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\bin\Debug\ServerClientShared.pdb
+F:\1. My Programming\ServerClient\ServerClient\LoginClient\obj\Debug\LoginClient.csproj.CopyComplete

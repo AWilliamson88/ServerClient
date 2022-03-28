@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LoginServer.LoginServerForm">
+    <Position X="2.25" Y="0.5" Width="2.5" />
+    <Members>
+      <Field Name="components" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAwAgwACYAAAAAEACAQAIDIRIAAAAAhAECMAMAQAA=</HashCode>
+      <FileName>LoginServerForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoginServer.PasswordTester">
+    <Position X="5" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PasswordTester.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoginServer.PipeServer">
+    <Position X="7.25" Y="0.5" Width="2.5" />
+    <NestedTypes>
+      <Struct Name="LoginServer.PipeServer.SECURITY_DESCRIPTOR" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeServer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="LoginServer.PipeServer.SECURITY_ATTRIBUTES" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeServer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Class Name="LoginServer.PipeServer.Client" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeServer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="LoginServer.PipeServer.MessageReceivedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeServer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="LoginServer.PipeServer.ClientDisconnectedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeServer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="LoginServer.PipeServer.GetAdminDetailsHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeServer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="LoginServer.PipeServer.AllowMessagingHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeServer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EBABEAAAAiAggAAAIEAAQAEwCAgAAgACAAAAIAEACEQ=</HashCode>
+      <FileName>PipeServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoginServer.SaltGenerator">
+    <Position X="5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAACAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SaltGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoginServer.Utility">
+    <Position X="5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAgAAAAAAAAAAAEABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

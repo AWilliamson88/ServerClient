@@ -1,0 +1,6 @@
+F:\1. My Programming\ServerClient\ServerClient\ServerClientShared\ServerClientShared\bin\Debug\ServerClientShared.dll
+F:\1. My Programming\ServerClient\ServerClient\ServerClientShared\ServerClientShared\bin\Debug\ServerClientShared.pdb
+F:\1. My Programming\ServerClient\ServerClient\ServerClientShared\ServerClientShared\obj\Debug\ServerClientShared.csproj.AssemblyReference.cache
+F:\1. My Programming\ServerClient\ServerClient\ServerClientShared\ServerClientShared\obj\Debug\ServerClientShared.csproj.CoreCompileInputs.cache
+F:\1. My Programming\ServerClient\ServerClient\ServerClientShared\ServerClientShared\obj\Debug\ServerClientShared.dll
+F:\1. My Programming\ServerClient\ServerClient\ServerClientShared\ServerClientShared\obj\Debug\ServerClientShared.pdb
